@@ -1,0 +1,8 @@
+# Binarios e saidas geradas pelo Makefile
+build/
+*.got
+
+# Arquivos temporarios comuns
+*.tmp
+*.log
+.DS_Store
