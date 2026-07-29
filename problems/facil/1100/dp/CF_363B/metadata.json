@@ -1,0 +1,16 @@
+{
+  "code": "CF_363B",
+  "contestId": 363,
+  "index": "B",
+  "name": "Fence",
+  "rating": 1100,
+  "difficulty": "facil",
+  "category": "dp",
+  "tags": [
+    "brute force",
+    "dp"
+  ],
+  "solvedCount": 69967,
+  "url": "https://codeforces.com/problemset/problem/363/B",
+  "sampleCount": 1
+}
