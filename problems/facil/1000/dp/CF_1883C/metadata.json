@@ -1,0 +1,16 @@
+{
+  "code": "CF_1883C",
+  "contestId": 1883,
+  "index": "C",
+  "name": "Raspberries",
+  "rating": 1000,
+  "difficulty": "facil",
+  "category": "dp",
+  "tags": [
+    "dp",
+    "math"
+  ],
+  "solvedCount": 53950,
+  "url": "https://codeforces.com/problemset/problem/1883/C",
+  "sampleCount": 1
+}

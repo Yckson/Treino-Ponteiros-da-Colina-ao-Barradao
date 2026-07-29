@@ -1,0 +1,17 @@
+{
+  "code": "CF_580A",
+  "contestId": 580,
+  "index": "A",
+  "name": "Kefa and First Steps",
+  "rating": 900,
+  "difficulty": "iniciante",
+  "category": "dp",
+  "tags": [
+    "brute force",
+    "dp",
+    "implementation"
+  ],
+  "solvedCount": 107993,
+  "url": "https://codeforces.com/problemset/problem/580/A",
+  "sampleCount": 2
+}
