@@ -1,4 +1,8 @@
-# Treino Ponteiros: da Colina ao Barradão
+# Ponteiros da Colina ao Barradão
+
+<p align="center">
+  <img src="docs/Ponteiros%20-%20da%20colina%20ao%20barradao.png" alt="Ponteiros: da Colina ao Barradão" width="420">
+</p>
 
 Repositório para organizar treinos de maratona de programação no padrão SBC, usando problemas do Codeforces como base.
 
