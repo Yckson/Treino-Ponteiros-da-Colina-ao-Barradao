@@ -1,0 +1,4 @@
+# Arquivos de casos de teste devem ser tratados como texto
+*.txt text eol=lf
+*.md text eol=lf
+*.json text eol=lf

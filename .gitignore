@@ -6,3 +6,11 @@ build/
 *.tmp
 *.log
 .DS_Store
+
+
+# Cache local da API do Codeforces
+.cache/
+# Cache/bytecode Python
+__pycache__/
+*.py[cod]
+*$py.class

@@ -17,7 +17,7 @@ BINARY := $(BUILD_DIR)/$(PROB)
 INPUT_DIR := $(PROB_DIR)/input
 OUTPUT_DIR := $(PROB_DIR)/output
 
-.PHONY: help new build run test exec list clean
+.PHONY: help new build run test exec list cf-tool cf-download cf-random clean
 
 help:
 	@echo "Comandos disponiveis:"
@@ -27,6 +27,9 @@ help:
 	@echo "  make test PROB=CF_71A   testa todos os casos ja compilados"
 	@echo "  make exec PROB=CF_71A   executa o binario lendo da entrada padrao"
 	@echo "  make list               lista problemas em src/"
+	@echo "  make cf-tool            abre menu para baixar problemas do Codeforces"
+	@echo "  make cf-download PROB=CF_71A baixa statement/samples pelo codigo"
+	@echo "  make cf-random          baixa problema aleatorio com filtros interativos"
 	@echo "  make clean              remove build/"
 
 new:
@@ -47,11 +50,11 @@ test:
 	$(PROB_REQUIRED)
 	@if [ ! -x "$(BINARY)" ]; then echo "Erro: binario nao encontrado. Rode: make build PROB=$(PROB)"; exit 1; fi
 	@if [ ! -d "$(INPUT_DIR)" ]; then echo "Erro: pasta de entradas nao encontrada: $(INPUT_DIR)"; exit 1; fi
-	@if [ -z "$$(find "$(INPUT_DIR)" -name '*.in' -type f | sort)" ]; then echo "Nenhum caso .in encontrado em $(INPUT_DIR)"; exit 0; fi
+	@if [ -z "$$(find "$(INPUT_DIR)" -name '*.txt' -type f | sort)" ]; then echo "Nenhum caso .txt encontrado em $(INPUT_DIR)"; exit 0; fi
 	@status=0; \
-	for input in $$(find "$(INPUT_DIR)" -name '*.in' -type f | sort); do \
-		base=$$(basename "$$input" .in); \
-		expected="$(OUTPUT_DIR)/$$base.out"; \
+	for input in $$(find "$(INPUT_DIR)" -name '*.txt' -type f | sort); do \
+		base=$$(basename "$$input" .txt); \
+		expected="$(OUTPUT_DIR)/$$base.txt"; \
 		got="$(BUILD_DIR)/$(PROB)_$$base.got"; \
 		echo "==> $$base"; \
 		"$(BINARY)" < "$$input" > "$$got"; \
@@ -75,6 +78,16 @@ exec: build
 list:
 	@if [ ! -d "$(SRC_DIR)" ]; then echo "Nenhum problema cadastrado ainda."; exit 0; fi
 	@find "$(SRC_DIR)" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort
+
+cf-tool:
+	python3 tools/cf_problem_tool.py
+
+cf-download:
+	$(PROB_REQUIRED)
+	python3 tools/cf_problem_tool.py --code "$(PROB)"
+
+cf-random:
+	python3 tools/cf_problem_tool.py --random
 
 clean:
 	@rm -rf "$(BUILD_DIR)"
