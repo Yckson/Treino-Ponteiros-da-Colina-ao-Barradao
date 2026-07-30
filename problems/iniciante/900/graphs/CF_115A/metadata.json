@@ -1,0 +1,17 @@
+{
+  "code": "CF_115A",
+  "contestId": 115,
+  "index": "A",
+  "name": "Party",
+  "rating": 900,
+  "difficulty": "iniciante",
+  "category": "graphs",
+  "tags": [
+    "dfs and similar",
+    "graphs",
+    "trees"
+  ],
+  "solvedCount": 45063,
+  "url": "https://codeforces.com/problemset/problem/115/A",
+  "sampleCount": 1
+}
