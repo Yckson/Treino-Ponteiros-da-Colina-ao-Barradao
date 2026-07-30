@@ -1,0 +1,17 @@
+{
+  "code": "CF_500A",
+  "contestId": 500,
+  "index": "A",
+  "name": "New Year Transportation",
+  "rating": 1000,
+  "difficulty": "facil",
+  "category": "graphs",
+  "tags": [
+    "dfs and similar",
+    "graphs",
+    "implementation"
+  ],
+  "solvedCount": 64400,
+  "url": "https://codeforces.com/problemset/problem/500/A",
+  "sampleCount": 2
+}
