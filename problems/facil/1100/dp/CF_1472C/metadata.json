@@ -1,0 +1,16 @@
+{
+  "code": "CF_1472C",
+  "contestId": 1472,
+  "index": "C",
+  "name": "Long Jumps",
+  "rating": 1100,
+  "difficulty": "facil",
+  "category": "dp",
+  "tags": [
+    "dp",
+    "graphs"
+  ],
+  "solvedCount": 35940,
+  "url": "https://codeforces.com/problemset/problem/1472/C",
+  "sampleCount": 1
+}
