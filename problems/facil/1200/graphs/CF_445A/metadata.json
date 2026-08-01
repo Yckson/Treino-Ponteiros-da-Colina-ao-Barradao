@@ -1,0 +1,16 @@
+{
+  "code": "CF_445A",
+  "contestId": 445,
+  "index": "A",
+  "name": "DZY Loves Chessboard",
+  "rating": 1200,
+  "difficulty": "facil",
+  "category": "graphs",
+  "tags": [
+    "dfs and similar",
+    "implementation"
+  ],
+  "solvedCount": 34259,
+  "url": "https://codeforces.com/problemset/problem/445/A",
+  "sampleCount": 3
+}
