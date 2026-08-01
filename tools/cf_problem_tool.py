@@ -6,6 +6,7 @@ Recursos:
 - baixa enunciado em Markdown a partir da pagina publica do problema;
 - extrai exemplos para src/<PROB>/input e src/<PROB>/output;
 - organiza o enunciado em problems/<dificuldade>/<rating>/<categoria>/<PROB>/;
+- permite listar/baixar problemas de um contest inteiro;
 - oferece menu interativo com autocomplete via readline.
 
 A API oficial nao fornece enunciados nem samples. Por isso, a ferramenta usa a
@@ -36,6 +37,7 @@ CACHE_DIR = REPO_ROOT / ".cache" / "codeforces"
 CACHE_FILE = CACHE_DIR / "problemset.json"
 HTML_CACHE_DIR = CACHE_DIR / "statements"
 CODEFORCES_API = "https://codeforces.com/api/problemset.problems"
+CODEFORCES_STANDINGS_API = "https://codeforces.com/api/contest.standings"
 
 CATEGORIES = [
     "implementation",
@@ -62,6 +64,8 @@ DIFFICULTY_RANGES = [
 
 TAG_TO_CATEGORY = {
     "implementation": "implementation",
+    "constructive algorithms": "implementation",
+    "brute force": "implementation",
     "strings": "strings",
     "string suffix structures": "strings",
     "math": "math",
@@ -193,6 +197,70 @@ def find_problem(problems: Iterable[Problem], code: str) -> Problem:
     raise LookupError(f"Problema {code} nao encontrado na API do Codeforces.")
 
 
+def parse_contest_id(value: str) -> int:
+    text = value.strip()
+    match = re.search(r"codeforces\.com/(?:contest|gym)/(\d+)", text)
+    if match:
+        return int(match.group(1))
+    if text.isdigit():
+        return int(text)
+    raise ValueError("Contest invalido. Use um ID como 2248 ou uma URL do Codeforces.")
+
+
+def fetch_contest_from_standings(contest_id: int) -> list[Problem]:
+    url = f"{CODEFORCES_STANDINGS_API}?contestId={contest_id}&from=1&count=1"
+    data = request_json(url)
+    if data.get("status") != "OK":
+        raise RuntimeError(f"contest.standings falhou: {data.get('comment', 'erro desconhecido')}")
+    result = data.get("result", {})
+    rows = result.get("rows", [])
+    solved_by_index: dict[str, int] = {}
+    for row in rows:
+        for problem_result in row.get("problemResults", []):
+            index = str(problem_result.get("problem", {}).get("index", ""))
+            solved_by_index[index] = int(problem_result.get("bestSubmissionTimeSeconds") is not None)
+    fetched: list[Problem] = []
+    for item in result.get("problems", []):
+        if "contestId" not in item or "index" not in item:
+            continue
+        index = str(item["index"])
+        fetched.append(
+            Problem(
+                contest_id=int(item["contestId"]),
+                index=index,
+                name=str(item.get("name", "Sem nome")),
+                rating=item.get("rating"),
+                tags=tuple(item.get("tags", [])),
+                solved_count=solved_by_index.get(index, 0),
+            )
+        )
+    return fetched
+
+
+def contest_problems(problems: Iterable[Problem], contest: str) -> list[Problem]:
+    contest_id = parse_contest_id(contest)
+    selected = [problem for problem in problems if problem.contest_id == contest_id]
+    if not selected:
+        selected = fetch_contest_from_standings(contest_id)
+    selected.sort(key=lambda problem: problem.index)
+    if not selected:
+        raise LookupError(f"Nenhum problema encontrado para o contest {contest_id}.")
+    return selected
+
+
+def print_contest_problems(selected: list[Problem]) -> None:
+    if not selected:
+        print("Nenhum problema para mostrar.")
+        return
+    contest_id = selected[0].contest_id
+    print(f"\nContest {contest_id}: {len(selected)} problema(s)")
+    for problem in selected:
+        rating = problem.rating if problem.rating is not None else "unrated"
+        category = category_for_tags(problem.tags)
+        tags = ", ".join(problem.tags) if problem.tags else "sem tags"
+        print(f"  {problem.repo_code:12} {str(rating):>7}  {category:16} {problem.name} [{tags}]")
+
+
 def difficulty_for_rating(rating: int | None) -> str:
     if rating is None:
         return "sem-rating"
@@ -220,9 +288,106 @@ def category_for_tags(tags: Iterable[str], preferred: str | None = None) -> str:
     return "implementation"
 
 
+def preferred_category_for_refresh(problem: Problem, old_category: str | None = None) -> str:
+    mapped = category_for_tags(problem.tags)
+    if mapped != "implementation" or not old_category:
+        return mapped
+    # Se a API ainda nao tem tags ou so tem tags que nao mapeamos bem, preserva
+    # a categoria humana/local anterior para nao baguncar organizacao manual.
+    if not problem.tags or old_category in CATEGORIES:
+        return old_category
+    return mapped
+
+
+def problem_target_path(problem: Problem, category: str | None = None) -> Path:
+    final_category = category_for_tags(problem.tags, category)
+    return PROBLEMS_DIR / difficulty_for_rating(problem.rating) / rating_folder(problem.rating) / final_category / problem.repo_code
+
+
+def metadata_payload(problem: Problem, category: str, sample_count: int) -> dict:
+    return {
+        "code": problem.repo_code,
+        "contestId": problem.contest_id,
+        "index": problem.index,
+        "name": problem.name,
+        "rating": problem.rating,
+        "difficulty": difficulty_for_rating(problem.rating),
+        "category": category,
+        "tags": list(problem.tags),
+        "solvedCount": problem.solved_count,
+        "url": problem.url,
+        "sampleCount": sample_count,
+    }
+
+
+def write_metadata_file(target: Path, problem: Problem, category: str, sample_count: int) -> None:
+    (target / "metadata.json").write_text(
+        json.dumps(metadata_payload(problem, category, sample_count), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def write_problem_readme_if_missing(target: Path, problem: Problem, category: str, sample_count: int) -> None:
+    readme = target / "README.md"
+    if readme.exists():
+        return
+    readme.write_text(
+        f"# {problem.repo_code} — {problem.name}\n\n"
+        f"- Link: [{problem.raw_code}]({problem.url})\n"
+        f"- Score: {problem.rating if problem.rating is not None else 'unrated'}\n"
+        f"- Categoria: `{category}`\n"
+        f"- Tags: {', '.join(problem.tags) if problem.tags else 'sem tags'}\n"
+        f"- Samples extraidos: {sample_count}\n\n"
+        "## Observacoes de treino\n\n"
+        "- Ideia principal:\n"
+        "- Erros comuns:\n"
+        "- Complexidade:\n",
+        encoding="utf-8",
+    )
+
+
+def update_statement_header(target: Path, problem: Problem, category: str) -> None:
+    statement = target / "statement.md"
+    if not statement.exists():
+        return
+    text = statement.read_text(encoding="utf-8", errors="replace")
+    separator = "\n---\n\n"
+    if separator not in text:
+        return
+    old_header, body = text.split(separator, 1)
+    preserved_lines = []
+    for line in old_header.splitlines():
+        if line.startswith("- Titulo original:") or line.startswith("- time limit") or line.startswith("- memory limit") or line.startswith("- input:") or line.startswith("- output:"):
+            preserved_lines.append(line)
+    header = [
+        f"# {problem.repo_code} — {problem.name}",
+        "",
+        f"- Codeforces: [{problem.raw_code}]({problem.url})",
+        f"- Score/rating: {problem.rating if problem.rating is not None else 'unrated'}",
+        f"- Categoria local: `{category}`",
+        f"- Tags Codeforces: {', '.join(problem.tags) if problem.tags else 'sem tags'}",
+        f"- Resolvidos no Codeforces: {problem.solved_count}",
+    ]
+    header.extend(preserved_lines)
+    statement.write_text("\n".join(header).rstrip() + "\n\n---\n\n" + body, encoding="utf-8", newline="\n")
+
+
+def remove_empty_parents(path: Path, stop: Path) -> None:
+    current = path
+    stop = stop.resolve()
+    while current.resolve() != stop and stop in current.resolve().parents:
+        try:
+            current.rmdir()
+        except OSError:
+            break
+        current = current.parent
+
+
 def fetch_statement_html(problem: Problem) -> str:
     cache_path = HTML_CACHE_DIR / f"{problem.raw_code}.html"
     urls = [
+        f"http://codeforces.com/contest/{problem.contest_id}/problem/{problem.index}",
+        f"https://codeforces.com/contest/{problem.contest_id}/problem/{problem.index}?mobile=true",
         f"http://codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}",
         f"https://codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}?mobile=true",
         f"https://codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}",
@@ -475,9 +640,7 @@ def ensure_solution_skeleton(problem: Problem, samples: list[tuple[str, str]]) -
 
 def write_problem_files(problem: Problem, category: str | None = None) -> Path:
     final_category = category_for_tags(problem.tags, category)
-    difficulty = difficulty_for_rating(problem.rating)
-    rating = rating_folder(problem.rating)
-    target = PROBLEMS_DIR / difficulty / rating / final_category / problem.repo_code
+    target = problem_target_path(problem, final_category)
     target.mkdir(parents=True, exist_ok=True)
 
     statement_html = fetch_statement_html(problem)
@@ -486,27 +649,7 @@ def write_problem_files(problem: Problem, category: str | None = None) -> Path:
     markdown = make_statement_markdown(problem, statement_html, final_category, samples)
 
     (target / "statement.md").write_text(markdown, encoding="utf-8")
-    (target / "metadata.json").write_text(
-        json.dumps(
-            {
-                "code": problem.repo_code,
-                "contestId": problem.contest_id,
-                "index": problem.index,
-                "name": problem.name,
-                "rating": problem.rating,
-                "difficulty": difficulty,
-                "category": final_category,
-                "tags": list(problem.tags),
-                "solvedCount": problem.solved_count,
-                "url": problem.url,
-                "sampleCount": len(samples),
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    write_metadata_file(target, problem, final_category, len(samples))
     (target / "README.md").write_text(
         f"# {problem.repo_code} — {problem.name}\n\n"
         f"- Link: [{problem.raw_code}]({problem.url})\n"
@@ -642,6 +785,102 @@ def choose_random_problem(problems: list[Problem]) -> tuple[Problem, str | None]
     return chosen, category
 
 
+def find_downloaded_problem_dirs() -> list[Path]:
+    if not PROBLEMS_DIR.exists():
+        return []
+    return sorted(path.parent for path in PROBLEMS_DIR.rglob("metadata.json"))
+
+
+def problem_from_metadata(metadata: dict) -> str | None:
+    code = metadata.get("code")
+    if isinstance(code, str) and code:
+        return code
+    contest_id = metadata.get("contestId")
+    index = metadata.get("index")
+    if contest_id is not None and index:
+        return f"CF_{contest_id}{index}"
+    return None
+
+
+def refresh_downloaded_problems(problems: list[Problem], dry_run: bool = False) -> None:
+    by_code = {problem.repo_code: problem for problem in problems}
+    dirs = find_downloaded_problem_dirs()
+    if not dirs:
+        print("Nenhum problema baixado encontrado em problems/.")
+        return
+
+    moved = updated = skipped = unchanged = 0
+    for current_dir in dirs:
+        metadata_path = current_dir / "metadata.json"
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"SKIP {metadata_path}: metadata invalido ({exc})")
+            skipped += 1
+            continue
+
+        code = problem_from_metadata(metadata)
+        if not code or code not in by_code:
+            print(f"SKIP {current_dir}: problema nao encontrado na API atual ({code or 'sem codigo'})")
+            skipped += 1
+            continue
+
+        problem = by_code[code]
+        old_category = metadata.get("category") if isinstance(metadata.get("category"), str) else None
+        category = preferred_category_for_refresh(problem, old_category)
+        target = problem_target_path(problem, category)
+        sample_count = len(list((SRC_DIR / problem.repo_code / "input").glob("*.txt")))
+        if not sample_count:
+            sample_count = int(metadata.get("sampleCount") or 0)
+
+        changes = []
+        if current_dir.resolve() != target.resolve():
+            changes.append(f"mover para {target.relative_to(REPO_ROOT)}")
+        if metadata.get("rating") != problem.rating:
+            changes.append(f"rating {metadata.get('rating')} -> {problem.rating if problem.rating is not None else 'unrated'}")
+        if metadata.get("tags") != list(problem.tags):
+            changes.append("tags atualizadas")
+        if metadata.get("solvedCount") != problem.solved_count:
+            changes.append("solvedCount atualizado")
+        if metadata.get("category") != category:
+            changes.append(f"categoria {metadata.get('category')} -> {category}")
+
+        if not changes:
+            if not dry_run:
+                write_metadata_file(current_dir, problem, category, sample_count)
+                write_problem_readme_if_missing(current_dir, problem, category, sample_count)
+                update_statement_header(current_dir, problem, category)
+            print(f"OK {problem.repo_code}: sem mudancas")
+            unchanged += 1
+            continue
+
+        print(f"REFRESH {problem.repo_code}: " + "; ".join(changes))
+        if dry_run:
+            updated += 1
+            continue
+
+        target.parent.mkdir(parents=True, exist_ok=True)
+        final_dir = current_dir
+        if current_dir.resolve() != target.resolve():
+            if target.exists():
+                raise RuntimeError(f"Destino ja existe para {problem.repo_code}: {target}")
+            shutil.move(str(current_dir), str(target))
+            remove_empty_parents(current_dir.parent, PROBLEMS_DIR)
+            final_dir = target
+            moved += 1
+        write_metadata_file(final_dir, problem, category, sample_count)
+        write_problem_readme_if_missing(final_dir, problem, category, sample_count)
+        update_statement_header(final_dir, problem, category)
+        updated += 1
+
+    print(
+        f"\nRefresh concluido: {updated} atualizado(s), {moved} movido(s), "
+        f"{unchanged} sem mudancas, {skipped} ignorado(s)."
+    )
+    if dry_run:
+        print("Dry-run: nenhuma alteracao foi gravada.")
+
+
 def download_by_code(problems: list[Problem], code: str | None = None) -> None:
     if not code:
         code = prompt_autocomplete(
@@ -654,6 +893,60 @@ def download_by_code(problems: list[Problem], code: str | None = None) -> None:
     print(f"Baixando {problem.repo_code} — {problem.name}...")
     target = write_problem_files(problem, category)
     print_download_result(problem, target)
+
+
+def download_contest(
+    problems: list[Problem],
+    contest: str,
+    download_all: bool = False,
+    chosen_code: str | None = None,
+) -> None:
+    selected = contest_problems(problems, contest)
+    print_contest_problems(selected)
+    if not download_all and not chosen_code:
+        return
+
+    if chosen_code:
+        wanted_contest, wanted_index = parse_problem_code(chosen_code)
+        selected = [
+            problem
+            for problem in selected
+            if problem.contest_id == wanted_contest and problem.index.upper() == wanted_index.upper()
+        ]
+        if not selected:
+            raise LookupError(f"Problema {chosen_code} nao pertence ao contest informado.")
+
+    for problem in selected:
+        category = category_for_tags(problem.tags)
+        print(f"\nBaixando {problem.repo_code} — {problem.name}...")
+        target = write_problem_files(problem, category)
+        print_download_result(problem, target)
+
+
+def prompt_contest_download(problems: list[Problem], download_all_default: bool = False) -> None:
+    contest = input("Contest ID ou URL: ").strip()
+    if not contest:
+        print("Contest nao informado.")
+        return
+    selected = contest_problems(problems, contest)
+    print_contest_problems(selected)
+    if download_all_default:
+        answer = "t"
+    else:
+        answer = input("Baixar [t]odos, [u]m especifico ou apenas [l]istar? ").strip().lower()
+    if answer in {"t", "todos", "all", "a"}:
+        for problem in selected:
+            category = category_for_tags(problem.tags)
+            print(f"\nBaixando {problem.repo_code} — {problem.name}...")
+            target = write_problem_files(problem, category)
+            print_download_result(problem, target)
+    elif answer in {"u", "um", "one", "o"}:
+        code = prompt_autocomplete(
+            "Codigo do problema do contest: ",
+            [problem.repo_code for problem in selected] + [problem.raw_code for problem in selected],
+            allow_empty=False,
+        )
+        download_contest(problems, contest, chosen_code=code)
 
 
 def print_download_result(problem: Problem, target: Path) -> None:
@@ -675,7 +968,10 @@ def interactive_menu(force_refresh: bool = False) -> None:
         print("  1) Baixar problema pelo codigo")
         print("  2) Escolher e baixar problema aleatorio por caracteristicas")
         print("  3) Listar candidatos por filtros")
-        print("  4) Atualizar cache da API")
+        print("  4) Listar problemas de um contest")
+        print("  5) Baixar problemas de um contest")
+        print("  6) Atualizar cache da API")
+        print("  7) Atualizar/reorganizar problemas baixados")
         print("  0) Sair")
         option = input("Opcao: ").strip()
         try:
@@ -694,8 +990,15 @@ def interactive_menu(force_refresh: bool = False) -> None:
                     print(f"{problem.repo_code:12} {str(problem.rating):>5}  {problem.name}  [{', '.join(problem.tags[:4])}]")
                 print(f"Mostrando {len(candidates)} candidato(s).")
             elif option == "4":
+                prompt_contest_download(problems, download_all_default=False)
+            elif option == "5":
+                prompt_contest_download(problems, download_all_default=True)
+            elif option == "6":
                 problems = load_problemset(force_refresh=True)
                 print(f"Cache atualizado: {len(problems)} problemas.")
+            elif option == "7":
+                problems = load_problemset(force_refresh=True)
+                refresh_downloaded_problems(problems)
             elif option == "0":
                 return
             else:
@@ -717,25 +1020,46 @@ def main(argv: list[str] | None = None) -> int:
               python3 tools/cf_problem_tool.py
               python3 tools/cf_problem_tool.py --code CF_71A
               python3 tools/cf_problem_tool.py --random --category dp --rating 1300-1600
+              python3 tools/cf_problem_tool.py --contest 2248
+              python3 tools/cf_problem_tool.py --contest 2248 --download-all
+              python3 tools/cf_problem_tool.py --refresh-problems
             """
         ),
     )
     parser.add_argument("--code", help="codigo do problema, como CF_71A ou 71A")
     parser.add_argument("--random", action="store_true", help="baixa um problema aleatorio")
+    parser.add_argument("--contest", help="ID ou URL de contest para listar/baixar problemas")
+    parser.add_argument("--download-all", action="store_true", help="com --contest, baixa todos os problemas listados")
+    parser.add_argument("--contest-problem", help="com --contest, baixa apenas um problema especifico do contest")
     parser.add_argument("--category", choices=CATEGORIES, help="categoria local para filtro aleatorio")
     parser.add_argument("--rating", help="rating ou intervalo, como 1200 ou 1000-1400")
     parser.add_argument("--tag", help="tag exata do Codeforces para filtro aleatorio")
     parser.add_argument("--min-solved", type=int, help="minimo de resolucoes para filtro aleatorio")
     parser.add_argument("--refresh", action="store_true", help="forca atualizar cache da API")
+    parser.add_argument("--refresh-problems", action="store_true", help="atualiza metadata e reorganiza problemas ja baixados")
+    parser.add_argument("--dry-run", action="store_true", help="mostra o que mudaria sem gravar alteracoes")
     args = parser.parse_args(argv)
 
-    if not any([args.code, args.random]):
+    if not any([args.code, args.random, args.contest, args.refresh_problems]):
         interactive_menu(force_refresh=args.refresh)
         return 0
 
     problems = load_problemset(force_refresh=args.refresh)
+    if args.refresh_problems:
+        refresh_downloaded_problems(problems, dry_run=args.dry_run)
+        return 0
+
     if args.code:
         download_by_code(problems, args.code)
+        return 0
+
+    if args.contest:
+        download_contest(
+            problems,
+            args.contest,
+            download_all=args.download_all,
+            chosen_code=args.contest_problem,
+        )
         return 0
 
     rating_min = rating_max = None
