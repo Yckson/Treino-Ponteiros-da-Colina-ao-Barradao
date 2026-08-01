@@ -177,6 +177,53 @@ Escolher um problema aleatório por filtros interativos:
 make cf-random
 ```
 
+
+Listar problemas de um contest:
+
+```bash
+make cf-contest CONTEST=2248
+```
+
+Baixar todos os problemas de um contest:
+
+```bash
+make cf-contest-download CONTEST=2248
+```
+
+Baixar um problema específico de um contest:
+
+```bash
+make cf-contest-problem CONTEST=2248 PROB=CF_2248A
+```
+
+Também é possível passar a URL inteira:
+
+```bash
+python3 tools/cf_problem_tool.py --contest https://codeforces.com/contest/2248 --download-all
+```
+
+Problemas de contests recentes podem ainda não ter rating oficial. Nesses casos, eles ficam temporariamente em:
+
+```text
+problems/sem-rating/unrated/<categoria>/<codigo>/
+```
+
+
+Atualizar metadados e reorganizar problemas já baixados:
+
+```bash
+make cf-refresh-problems
+```
+
+Antes de mover qualquer pasta, você pode simular:
+
+```bash
+make cf-refresh-problems-dry
+```
+
+Esse comando é útil para problemas baixados enquanto um contest ainda estava sem rating. Quando a API passar a informar o rating, a pasta sai de `problems/sem-rating/unrated/...` e vai para o caminho correspondente, como `problems/facil/1200/...`. O comando não mexe em `src/<codigo>/`.
+
+
 Também é possível usar argumentos diretamente:
 
 ```bash

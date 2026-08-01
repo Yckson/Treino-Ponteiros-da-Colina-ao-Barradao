@@ -11,13 +11,19 @@ else
 PROB_REQUIRED =
 endif
 
+ifndef CONTEST
+CONTEST_REQUIRED = @echo "Erro: informe o contest. Exemplo: make cf-contest CONTEST=2248" && exit 1
+else
+CONTEST_REQUIRED =
+endif
+
 PROB_DIR := $(SRC_DIR)/$(PROB)
 SOURCE := $(PROB_DIR)/main.cpp
 BINARY := $(BUILD_DIR)/$(PROB)
 INPUT_DIR := $(PROB_DIR)/input
 OUTPUT_DIR := $(PROB_DIR)/output
 
-.PHONY: help new build run test exec list cf-tool cf-download cf-random clean
+.PHONY: help new build run test exec list cf-tool cf-download cf-random cf-contest cf-contest-download cf-contest-problem cf-refresh-problems cf-refresh-problems-dry clean
 
 help:
 	@echo "Comandos disponiveis:"
@@ -30,6 +36,11 @@ help:
 	@echo "  make cf-tool            abre menu para baixar problemas do Codeforces"
 	@echo "  make cf-download PROB=CF_71A baixa statement/samples pelo codigo"
 	@echo "  make cf-random          baixa problema aleatorio com filtros interativos"
+	@echo "  make cf-contest CONTEST=2248 lista problemas de um contest"
+	@echo "  make cf-contest-download CONTEST=2248 baixa todos os problemas do contest"
+	@echo "  make cf-contest-problem CONTEST=2248 PROB=CF_2248A baixa um problema do contest"
+	@echo "  make cf-refresh-problems atualiza metadata e reorganiza problemas baixados"
+	@echo "  make cf-refresh-problems-dry mostra o que mudaria sem alterar arquivos"
 	@echo "  make clean              remove build/"
 
 new:
@@ -88,6 +99,25 @@ cf-download:
 
 cf-random:
 	python3 tools/cf_problem_tool.py --random
+
+cf-contest:
+	$(CONTEST_REQUIRED)
+	python3 tools/cf_problem_tool.py --contest "$(CONTEST)"
+
+cf-contest-download:
+	$(CONTEST_REQUIRED)
+	python3 tools/cf_problem_tool.py --contest "$(CONTEST)" --download-all
+
+cf-contest-problem:
+	$(CONTEST_REQUIRED)
+	$(PROB_REQUIRED)
+	python3 tools/cf_problem_tool.py --contest "$(CONTEST)" --contest-problem "$(PROB)"
+
+cf-refresh-problems:
+	python3 tools/cf_problem_tool.py --refresh --refresh-problems
+
+cf-refresh-problems-dry:
+	python3 tools/cf_problem_tool.py --refresh --refresh-problems --dry-run
 
 clean:
 	@rm -rf "$(BUILD_DIR)"
