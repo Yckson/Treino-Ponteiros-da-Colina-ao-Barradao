@@ -17,13 +17,19 @@ else
 CONTEST_REQUIRED =
 endif
 
+ifndef GYM
+GYM_REQUIRED = @echo "Erro: informe o gym. Exemplo: make cf-gym GYM=105925" && exit 1
+else
+GYM_REQUIRED =
+endif
+
 PROB_DIR := $(SRC_DIR)/$(PROB)
 SOURCE := $(PROB_DIR)/main.cpp
 BINARY := $(BUILD_DIR)/$(PROB)
 INPUT_DIR := $(PROB_DIR)/input
 OUTPUT_DIR := $(PROB_DIR)/output
 
-.PHONY: help new build run test exec list cf-tool cf-download cf-random cf-contest cf-contest-download cf-contest-problem cf-refresh-problems cf-refresh-problems-dry clean
+.PHONY: help new build run test exec list cf-tool cf-download cf-random cf-contest cf-contest-download cf-contest-problem cf-gym cf-gym-download cf-gym-problem cf-refresh-problems cf-refresh-problems-dry clean
 
 help:
 	@echo "Comandos disponiveis:"
@@ -39,6 +45,9 @@ help:
 	@echo "  make cf-contest CONTEST=2248 lista problemas de um contest"
 	@echo "  make cf-contest-download CONTEST=2248 baixa todos os problemas do contest"
 	@echo "  make cf-contest-problem CONTEST=2248 PROB=CF_2248A baixa um problema do contest"
+	@echo "  make cf-gym GYM=105925 lista problemas de um gym"
+	@echo "  make cf-gym-download GYM=105925 baixa todos os problemas do gym"
+	@echo "  make cf-gym-problem GYM=105925 PROB=CF_105925A baixa um problema do gym"
 	@echo "  make cf-refresh-problems atualiza metadata e reorganiza problemas baixados"
 	@echo "  make cf-refresh-problems-dry mostra o que mudaria sem alterar arquivos"
 	@echo "  make clean              remove build/"
@@ -112,6 +121,19 @@ cf-contest-problem:
 	$(CONTEST_REQUIRED)
 	$(PROB_REQUIRED)
 	python3 tools/cf_problem_tool.py --contest "$(CONTEST)" --contest-problem "$(PROB)"
+
+cf-gym:
+	$(GYM_REQUIRED)
+	python3 tools/cf_problem_tool.py --gym "$(GYM)"
+
+cf-gym-download:
+	$(GYM_REQUIRED)
+	python3 tools/cf_problem_tool.py --gym "$(GYM)" --download-all
+
+cf-gym-problem:
+	$(GYM_REQUIRED)
+	$(PROB_REQUIRED)
+	python3 tools/cf_problem_tool.py --gym "$(GYM)" --contest-problem "$(PROB)"
 
 cf-refresh-problems:
 	python3 tools/cf_problem_tool.py --refresh --refresh-problems
