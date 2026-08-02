@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -std=c++17 -O3 -Wall -Wextra -Wshadow -Wconversion -pedantic
+CXXFLAGS := -std=c++17 -O2 -Wall -Wextra -Wshadow -Wconversion -pedantic
 
 SRC_DIR := src
 BUILD_DIR := build

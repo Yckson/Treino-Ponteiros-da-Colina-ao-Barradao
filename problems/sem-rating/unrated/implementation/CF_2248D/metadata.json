@@ -1,0 +1,15 @@
+{
+  "code": "CF_2248D",
+  "contestId": 2248,
+  "index": "D",
+  "name": "Good Pair Queries",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "implementation",
+  "tags": [
+    "constructive algorithms"
+  ],
+  "solvedCount": 4067,
+  "url": "https://codeforces.com/problemset/problem/2248/D",
+  "sampleCount": 1
+}

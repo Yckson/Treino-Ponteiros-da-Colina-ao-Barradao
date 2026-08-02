@@ -1,0 +1,15 @@
+{
+  "code": "CF_2248E",
+  "contestId": 2248,
+  "index": "E",
+  "name": "Excuse for Breaks",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "binary-search",
+  "tags": [
+    "binary search"
+  ],
+  "solvedCount": 1016,
+  "url": "https://codeforces.com/problemset/problem/2248/E",
+  "sampleCount": 1
+}

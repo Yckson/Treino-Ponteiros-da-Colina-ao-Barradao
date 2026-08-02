@@ -6,6 +6,7 @@ build/
 *.tmp
 *.log
 .DS_Store
+tmp
 
 
 # Cache local da API do Codeforces
