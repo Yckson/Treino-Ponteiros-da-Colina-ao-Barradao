@@ -202,6 +202,21 @@ Também é possível passar a URL inteira:
 python3 tools/cf_problem_tool.py --contest https://codeforces.com/contest/2248 --download-all
 ```
 
+Para gyms públicos, use os comandos de gym com o ID do gym:
+
+```bash
+make cf-gym GYM=105925
+make cf-gym-download GYM=105925
+make cf-gym-problem GYM=105925 PROB=CF_105925A
+```
+
+No script direto, use `--gym`:
+
+```bash
+python3 tools/cf_problem_tool.py --gym 105925 --download-all
+python3 tools/cf_problem_tool.py --gym https://codeforces.com/gym/105925 --download-all
+```
+
 Problemas de contests recentes podem ainda não ter rating oficial. Nesses casos, eles ficam temporariamente em:
 
 ```text

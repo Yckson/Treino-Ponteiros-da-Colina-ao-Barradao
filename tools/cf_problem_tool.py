@@ -113,6 +113,7 @@ class Problem:
     rating: int | None
     tags: tuple[str, ...]
     solved_count: int
+    source: str = "problemset"
 
     @property
     def raw_code(self) -> str:
@@ -124,7 +125,17 @@ class Problem:
 
     @property
     def url(self) -> str:
+        if self.source == "gym":
+            return f"https://codeforces.com/gym/{self.contest_id}/problem/{self.index}"
+        if self.source in {"contest", "unknown"}:
+            return f"https://codeforces.com/contest/{self.contest_id}/problem/{self.index}"
         return f"https://codeforces.com/problemset/problem/{self.contest_id}/{self.index}"
+
+
+@dataclass(frozen=True)
+class ContestRef:
+    contest_id: int
+    source: str = "unknown"
 
 
 def request_json(url: str, timeout: int = 30) -> dict:
@@ -197,17 +208,34 @@ def find_problem(problems: Iterable[Problem], code: str) -> Problem:
     raise LookupError(f"Problema {code} nao encontrado na API do Codeforces.")
 
 
-def parse_contest_id(value: str) -> int:
+def parse_contest_ref(value: str, source: str | None = None) -> ContestRef:
     text = value.strip()
-    match = re.search(r"codeforces\.com/(?:contest|gym)/(\d+)", text)
+    match = re.search(r"codeforces\.com/(contest|gym)/(\d+)", text)
     if match:
-        return int(match.group(1))
+        return ContestRef(int(match.group(2)), source or match.group(1))
     if text.isdigit():
-        return int(text)
+        return ContestRef(int(text), source or "unknown")
     raise ValueError("Contest invalido. Use um ID como 2248 ou uma URL do Codeforces.")
 
 
-def fetch_contest_from_standings(contest_id: int) -> list[Problem]:
+def parse_contest_id(value: str) -> int:
+    return parse_contest_ref(value).contest_id
+
+
+def with_problem_source(problem: Problem, source: str) -> Problem:
+    return Problem(
+        contest_id=problem.contest_id,
+        index=problem.index,
+        name=problem.name,
+        rating=problem.rating,
+        tags=problem.tags,
+        solved_count=problem.solved_count,
+        source=source,
+    )
+
+
+def fetch_contest_from_standings(contest_ref: ContestRef) -> list[Problem]:
+    contest_id = contest_ref.contest_id
     url = f"{CODEFORCES_STANDINGS_API}?contestId={contest_id}&from=1&count=1"
     data = request_json(url)
     if data.get("status") != "OK":
@@ -232,16 +260,90 @@ def fetch_contest_from_standings(contest_id: int) -> list[Problem]:
                 rating=item.get("rating"),
                 tags=tuple(item.get("tags", [])),
                 solved_count=solved_by_index.get(index, 0),
+                source=contest_ref.source,
             )
         )
     return fetched
 
 
-def contest_problems(problems: Iterable[Problem], contest: str) -> list[Problem]:
-    contest_id = parse_contest_id(contest)
+def contest_dashboard_urls(contest_ref: ContestRef) -> list[tuple[str, str]]:
+    sources = [contest_ref.source] if contest_ref.source in {"contest", "gym"} else ["contest", "gym"]
+    urls: list[tuple[str, str]] = []
+    for source in sources:
+        urls.append((source, f"https://codeforces.com/{source}/{contest_ref.contest_id}?locale=en"))
+    return urls
+
+
+def parse_contest_dashboard(contest_id: int, source: str, page_html: str) -> list[Problem]:
+    problem_href = rf'<a[^>]+href="/(?:contest|gym)/{contest_id}/problem/([^"]+)"[^>]*>(.*?)</a>'
+    status_href = rf'href="/(?:contest|gym)/{contest_id}/status/([^"]+)"[^>]*>.*?x(\d+)</a>'
+    solved_by_index = {
+        html.unescape(index).strip().upper(): int(count)
+        for index, count in re.findall(status_href, page_html, re.S | re.I)
+    }
+    problems_by_index: dict[str, Problem] = {}
+    for index_raw, anchor in re.findall(problem_href, page_html, re.S | re.I):
+        index = html.unescape(index_raw).strip()
+        key = index.upper()
+        text = strip_tags(anchor).strip()
+        current = problems_by_index.get(key)
+        name = current.name if current else "Sem nome"
+        if text and text.upper() != key:
+            name = text
+        problems_by_index[key] = Problem(
+            contest_id=contest_id,
+            index=index,
+            name=name,
+            rating=None,
+            tags=(),
+            solved_count=solved_by_index.get(key, current.solved_count if current else 0),
+            source=source,
+        )
+    return list(problems_by_index.values())
+
+
+def fetch_contest_from_dashboard(contest_ref: ContestRef) -> list[Problem]:
+    errors: list[str] = []
+    for source, url in contest_dashboard_urls(contest_ref):
+        try:
+            selected = parse_contest_dashboard(contest_ref.contest_id, source, request_text(url))
+            if selected:
+                return selected
+            errors.append(f"{url}: nenhum link de problema encontrado")
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+            errors.append(f"{url}: {exc}")
+    raise RuntimeError("dashboard HTML falhou:\n" + "\n".join(errors))
+
+
+def contest_problems(problems: Iterable[Problem], contest: str, gym: bool = False) -> list[Problem]:
+    contest_ref = parse_contest_ref(contest, source="gym" if gym else None)
+    contest_id = contest_ref.contest_id
     selected = [problem for problem in problems if problem.contest_id == contest_id]
+    should_try_dashboard = contest_ref.source == "gym"
+    errors: list[str] = []
+
+    if should_try_dashboard:
+        try:
+            dashboard_selected = fetch_contest_from_dashboard(contest_ref)
+            if len(dashboard_selected) > len(selected):
+                selected = dashboard_selected
+        except RuntimeError as exc:
+            errors.append(str(exc))
+
     if not selected:
-        selected = fetch_contest_from_standings(contest_id)
+        try:
+            selected = fetch_contest_from_standings(contest_ref)
+        except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+            errors.append(str(exc))
+        if not selected and not should_try_dashboard:
+            try:
+                selected = fetch_contest_from_dashboard(contest_ref)
+            except RuntimeError as exc:
+                errors.append(str(exc))
+        if not selected and errors:
+            raise LookupError(f"Nenhum problema encontrado para o contest {contest_id}. Tentativas:\n" + "\n".join(errors))
+    elif contest_ref.source in {"contest", "gym"}:
+        selected = [with_problem_source(problem, contest_ref.source) for problem in selected]
     selected.sort(key=lambda problem: problem.index)
     if not selected:
         raise LookupError(f"Nenhum problema encontrado para o contest {contest_id}.")
@@ -385,13 +487,23 @@ def remove_empty_parents(path: Path, stop: Path) -> None:
 
 def fetch_statement_html(problem: Problem) -> str:
     cache_path = HTML_CACHE_DIR / f"{problem.raw_code}.html"
-    urls = [
+    gym_urls = [
+        f"https://codeforces.com/gym/{problem.contest_id}/problem/{problem.index}?mobile=true",
+        f"https://codeforces.com/gym/{problem.contest_id}/problem/{problem.index}",
+        f"http://codeforces.com/gym/{problem.contest_id}/problem/{problem.index}",
+    ]
+    regular_urls = [
         f"http://codeforces.com/contest/{problem.contest_id}/problem/{problem.index}",
         f"https://codeforces.com/contest/{problem.contest_id}/problem/{problem.index}?mobile=true",
         f"http://codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}",
         f"https://codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}?mobile=true",
         f"https://codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}",
         f"https://mirror.codeforces.com/problemset/problem/{problem.contest_id}/{problem.index}",
+    ]
+    urls = [
+        *(gym_urls if problem.source == "gym" else []),
+        *regular_urls,
+        *(gym_urls if problem.source != "gym" else []),
     ]
     errors: list[str] = []
     for attempt in range(2):
@@ -900,8 +1012,9 @@ def download_contest(
     contest: str,
     download_all: bool = False,
     chosen_code: str | None = None,
+    gym: bool = False,
 ) -> None:
-    selected = contest_problems(problems, contest)
+    selected = contest_problems(problems, contest, gym=gym)
     print_contest_problems(selected)
     if not download_all and not chosen_code:
         return
@@ -1029,8 +1142,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--code", help="codigo do problema, como CF_71A ou 71A")
     parser.add_argument("--random", action="store_true", help="baixa um problema aleatorio")
     parser.add_argument("--contest", help="ID ou URL de contest para listar/baixar problemas")
-    parser.add_argument("--download-all", action="store_true", help="com --contest, baixa todos os problemas listados")
-    parser.add_argument("--contest-problem", help="com --contest, baixa apenas um problema especifico do contest")
+    parser.add_argument("--gym", help="ID ou URL de gym para listar/baixar problemas")
+    parser.add_argument("--download-all", action="store_true", help="com --contest/--gym, baixa todos os problemas listados")
+    parser.add_argument("--contest-problem", help="com --contest/--gym, baixa apenas um problema especifico")
     parser.add_argument("--category", choices=CATEGORIES, help="categoria local para filtro aleatorio")
     parser.add_argument("--rating", help="rating ou intervalo, como 1200 ou 1000-1400")
     parser.add_argument("--tag", help="tag exata do Codeforces para filtro aleatorio")
@@ -1040,7 +1154,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true", help="mostra o que mudaria sem gravar alteracoes")
     args = parser.parse_args(argv)
 
-    if not any([args.code, args.random, args.contest, args.refresh_problems]):
+    if not any([args.code, args.random, args.contest, args.gym, args.refresh_problems]):
         interactive_menu(force_refresh=args.refresh)
         return 0
 
@@ -1053,12 +1167,25 @@ def main(argv: list[str] | None = None) -> int:
         download_by_code(problems, args.code)
         return 0
 
+    if args.contest and args.gym:
+        raise SystemExit("Use apenas um entre --contest e --gym.")
+
     if args.contest:
         download_contest(
             problems,
             args.contest,
             download_all=args.download_all,
             chosen_code=args.contest_problem,
+        )
+        return 0
+
+    if args.gym:
+        download_contest(
+            problems,
+            args.gym,
+            download_all=args.download_all,
+            chosen_code=args.contest_problem,
+            gym=True,
         )
         return 0
 
