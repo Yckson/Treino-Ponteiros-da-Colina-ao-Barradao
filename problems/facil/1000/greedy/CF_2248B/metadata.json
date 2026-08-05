@@ -1,0 +1,16 @@
+{
+  "code": "CF_2248B",
+  "contestId": 2248,
+  "index": "B",
+  "name": "Merge to Match",
+  "rating": 1000,
+  "difficulty": "facil",
+  "category": "greedy",
+  "tags": [
+    "greedy",
+    "sortings"
+  ],
+  "solvedCount": 12144,
+  "url": "https://codeforces.com/problemset/problem/2248/B",
+  "sampleCount": 1
+}

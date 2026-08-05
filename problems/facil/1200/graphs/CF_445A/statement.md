@@ -4,7 +4,7 @@
 - Score/rating: 1200
 - Categoria local: `graphs`
 - Tags Codeforces: dfs and similar, implementation
-- Resolvidos no Codeforces: 34259
+- Resolvidos no Codeforces: 34299
 - Titulo original: A. DZY Loves Chessboard
 - time limit per test: 1 second
 - memory limit per test: 256 megabytes

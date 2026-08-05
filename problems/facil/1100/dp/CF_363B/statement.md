@@ -4,7 +4,7 @@
 - Score/rating: 1100
 - Categoria local: `dp`
 - Tags Codeforces: brute force, dp
-- Resolvidos no Codeforces: 69967
+- Resolvidos no Codeforces: 70240
 - Titulo original: B. Fence
 - time limit per test: 1 second
 - memory limit per test: 256 megabytes

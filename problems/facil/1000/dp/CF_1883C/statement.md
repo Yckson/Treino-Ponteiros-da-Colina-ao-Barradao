@@ -4,7 +4,7 @@
 - Score/rating: 1000
 - Categoria local: `dp`
 - Tags Codeforces: dp, math
-- Resolvidos no Codeforces: 53950
+- Resolvidos no Codeforces: 54246
 - Titulo original: C. Raspberries
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

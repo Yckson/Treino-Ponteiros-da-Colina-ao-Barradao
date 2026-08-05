@@ -1,0 +1,16 @@
+{
+  "code": "CF_2254A",
+  "contestId": 2254,
+  "index": "A",
+  "name": "Riptide",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "implementation",
+  "tags": [
+    "implementation",
+    "sortings"
+  ],
+  "solvedCount": 23922,
+  "url": "https://codeforces.com/problemset/problem/2254/A",
+  "sampleCount": 1
+}

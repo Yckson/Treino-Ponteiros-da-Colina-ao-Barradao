@@ -4,7 +4,7 @@
 - Score/rating: 900
 - Categoria local: `graphs`
 - Tags Codeforces: dfs and similar, graphs, trees
-- Resolvidos no Codeforces: 45063
+- Resolvidos no Codeforces: 45159
 - Titulo original: A. Party
 - time limit per test: 3 seconds
 - memory limit per test: 256 megabytes

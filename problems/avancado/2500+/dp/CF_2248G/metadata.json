@@ -1,0 +1,17 @@
+{
+  "code": "CF_2248G",
+  "contestId": 2248,
+  "index": "G",
+  "name": "No Balance Left",
+  "rating": 3000,
+  "difficulty": "avancado",
+  "category": "dp",
+  "tags": [
+    "bitmasks",
+    "dp",
+    "math"
+  ],
+  "solvedCount": 102,
+  "url": "https://codeforces.com/problemset/problem/2248/G",
+  "sampleCount": 2
+}

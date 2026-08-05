@@ -1,0 +1,16 @@
+{
+  "code": "CF_2248C",
+  "contestId": 2248,
+  "index": "C",
+  "name": "Maximize the Score",
+  "rating": 1300,
+  "difficulty": "medio",
+  "category": "dp",
+  "tags": [
+    "dp",
+    "greedy"
+  ],
+  "solvedCount": 7816,
+  "url": "https://codeforces.com/problemset/problem/2248/C",
+  "sampleCount": 1
+}

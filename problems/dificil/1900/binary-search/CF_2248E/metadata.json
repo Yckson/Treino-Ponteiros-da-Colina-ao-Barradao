@@ -1,0 +1,19 @@
+{
+  "code": "CF_2248E",
+  "contestId": 2248,
+  "index": "E",
+  "name": "Excuse for Breaks",
+  "rating": 1900,
+  "difficulty": "dificil",
+  "category": "binary-search",
+  "tags": [
+    "binary search",
+    "brute force",
+    "greedy",
+    "math",
+    "two pointers"
+  ],
+  "solvedCount": 1527,
+  "url": "https://codeforces.com/problemset/problem/2248/E",
+  "sampleCount": 1
+}

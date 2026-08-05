@@ -1,0 +1,15 @@
+{
+  "code": "CF_2254C1",
+  "contestId": 2254,
+  "index": "C1",
+  "name": "Marenol (easy version)",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "greedy",
+  "tags": [
+    "greedy"
+  ],
+  "solvedCount": 12878,
+  "url": "https://codeforces.com/problemset/problem/2254/C1",
+  "sampleCount": 1
+}

@@ -1,0 +1,20 @@
+{
+  "code": "CF_2254G",
+  "contestId": 2254,
+  "index": "G",
+  "name": "Nightcrawler",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "data-structures",
+  "tags": [
+    "data structures",
+    "dfs and similar",
+    "dp",
+    "greedy",
+    "sortings",
+    "trees"
+  ],
+  "solvedCount": 230,
+  "url": "https://codeforces.com/problemset/problem/2254/G",
+  "sampleCount": 1
+}

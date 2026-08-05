@@ -1,0 +1,17 @@
+{
+  "code": "CF_2254F",
+  "contestId": 2254,
+  "index": "F",
+  "name": "Whiplash",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "implementation",
+  "tags": [
+    "bitmasks",
+    "constructive algorithms",
+    "math"
+  ],
+  "solvedCount": 976,
+  "url": "https://codeforces.com/problemset/problem/2254/F",
+  "sampleCount": 1
+}

@@ -1,0 +1,17 @@
+{
+  "code": "CF_2248F",
+  "contestId": 2248,
+  "index": "F",
+  "name": "Matrix Elimination",
+  "rating": 2500,
+  "difficulty": "avancado",
+  "category": "binary-search",
+  "tags": [
+    "binary search",
+    "greedy",
+    "math"
+  ],
+  "solvedCount": 386,
+  "url": "https://codeforces.com/problemset/problem/2248/F",
+  "sampleCount": 1
+}

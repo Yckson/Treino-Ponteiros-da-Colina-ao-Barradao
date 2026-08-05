@@ -4,7 +4,7 @@
 - Score/rating: 900
 - Categoria local: `dp`
 - Tags Codeforces: brute force, dp, implementation
-- Resolvidos no Codeforces: 107993
+- Resolvidos no Codeforces: 108296
 - Titulo original: A. Kefa and First Steps
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

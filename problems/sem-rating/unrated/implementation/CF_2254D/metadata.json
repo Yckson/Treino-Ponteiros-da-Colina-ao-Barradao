@@ -1,0 +1,17 @@
+{
+  "code": "CF_2254D",
+  "contestId": 2254,
+  "index": "D",
+  "name": "Silhouette",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "implementation",
+  "tags": [
+    "constructive algorithms",
+    "math",
+    "sortings"
+  ],
+  "solvedCount": 5379,
+  "url": "https://codeforces.com/problemset/problem/2254/D",
+  "sampleCount": 1
+}

@@ -1,0 +1,17 @@
+{
+  "code": "CF_2254B",
+  "contestId": 2254,
+  "index": "B",
+  "name": "Evanescent",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "implementation",
+  "tags": [
+    "implementation",
+    "strings",
+    "two pointers"
+  ],
+  "solvedCount": 17134,
+  "url": "https://codeforces.com/problemset/problem/2254/B",
+  "sampleCount": 1
+}

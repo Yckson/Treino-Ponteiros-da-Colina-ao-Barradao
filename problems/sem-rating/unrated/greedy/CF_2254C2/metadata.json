@@ -1,0 +1,16 @@
+{
+  "code": "CF_2254C2",
+  "contestId": 2254,
+  "index": "C2",
+  "name": "Marenol (hard version)",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "greedy",
+  "tags": [
+    "greedy",
+    "sortings"
+  ],
+  "solvedCount": 8793,
+  "url": "https://codeforces.com/problemset/problem/2254/C2",
+  "sampleCount": 1
+}

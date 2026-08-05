@@ -1,0 +1,15 @@
+{
+  "code": "CF_2248A",
+  "contestId": 2248,
+  "index": "A",
+  "name": "You Delete, I Delete",
+  "rating": 800,
+  "difficulty": "iniciante",
+  "category": "greedy",
+  "tags": [
+    "greedy"
+  ],
+  "solvedCount": 16925,
+  "url": "https://codeforces.com/problemset/problem/2248/A",
+  "sampleCount": 1
+}

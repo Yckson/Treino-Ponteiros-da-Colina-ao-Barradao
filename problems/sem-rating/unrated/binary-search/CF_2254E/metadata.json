@@ -1,0 +1,17 @@
+{
+  "code": "CF_2254E",
+  "contestId": 2254,
+  "index": "E",
+  "name": "Chronostasis",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "binary-search",
+  "tags": [
+    "binary search",
+    "data structures",
+    "greedy"
+  ],
+  "solvedCount": 3603,
+  "url": "https://codeforces.com/problemset/problem/2254/E",
+  "sampleCount": 1
+}

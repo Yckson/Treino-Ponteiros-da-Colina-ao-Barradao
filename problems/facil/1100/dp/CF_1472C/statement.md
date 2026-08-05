@@ -4,7 +4,7 @@
 - Score/rating: 1100
 - Categoria local: `dp`
 - Tags Codeforces: dp, graphs
-- Resolvidos no Codeforces: 35940
+- Resolvidos no Codeforces: 35968
 - Titulo original: C. Long Jumps
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes
