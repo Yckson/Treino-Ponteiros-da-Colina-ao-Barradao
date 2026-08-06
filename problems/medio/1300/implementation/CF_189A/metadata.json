@@ -1,0 +1,16 @@
+{
+  "code": "CF_189A",
+  "contestId": 189,
+  "index": "A",
+  "name": "Cut Ribbon",
+  "rating": 1300,
+  "difficulty": "medio",
+  "category": "implementation",
+  "tags": [
+    "brute force",
+    "dp"
+  ],
+  "solvedCount": 83761,
+  "url": "https://codeforces.com/problemset/problem/189/A",
+  "sampleCount": 2
+}

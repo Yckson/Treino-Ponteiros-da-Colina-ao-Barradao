@@ -1,0 +1,20 @@
+{
+  "code": "CF_489B",
+  "contestId": 489,
+  "index": "B",
+  "name": "BerSU Ball",
+  "rating": 1200,
+  "difficulty": "facil",
+  "category": "graphs",
+  "tags": [
+    "dfs and similar",
+    "dp",
+    "graph matchings",
+    "greedy",
+    "sortings",
+    "two pointers"
+  ],
+  "solvedCount": 58829,
+  "url": "https://codeforces.com/problemset/problem/489/B",
+  "sampleCount": 3
+}
