@@ -9,9 +9,10 @@
   "tags": [
     "bitmasks",
     "dp",
-    "math"
+    "math",
+    "number theory"
   ],
-  "solvedCount": 102,
+  "solvedCount": 111,
   "url": "https://codeforces.com/problemset/problem/2248/G",
   "sampleCount": 2
 }

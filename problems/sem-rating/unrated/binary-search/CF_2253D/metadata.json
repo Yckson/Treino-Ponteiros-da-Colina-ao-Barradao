@@ -1,0 +1,20 @@
+{
+  "code": "CF_2253D",
+  "contestId": 2253,
+  "index": "D",
+  "name": "Hypercarp and Interdimensional Jumps",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "binary-search",
+  "tags": [
+    "binary search",
+    "brute force",
+    "geometry",
+    "greedy",
+    "implementation",
+    "math"
+  ],
+  "solvedCount": 2313,
+  "url": "https://codeforces.com/problemset/problem/2253/D",
+  "sampleCount": 1
+}

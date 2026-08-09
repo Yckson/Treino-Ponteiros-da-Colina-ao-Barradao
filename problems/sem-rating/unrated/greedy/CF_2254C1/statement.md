@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `greedy`
 - Tags Codeforces: greedy
-- Resolvidos no Codeforces: 12878
+- Resolvidos no Codeforces: 15433
 - Titulo original: C1. Marenol (easy version)
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

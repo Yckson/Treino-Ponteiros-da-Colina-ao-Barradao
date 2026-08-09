@@ -1,10 +1,10 @@
 # CF_2253B — Hypercarp and the Control Panel
 
-- Codeforces: [2253B](https://codeforces.com/contest/2253/problem/B)
+- Codeforces: [2253B](https://codeforces.com/problemset/problem/2253/B)
 - Score/rating: unrated
 - Categoria local: `implementation`
-- Tags Codeforces: sem tags
-- Resolvidos no Codeforces: 106
+- Tags Codeforces: brute force, data structures, two pointers
+- Resolvidos no Codeforces: 9827
 - Titulo original: B. Hypercarp and the Control Panel
 - time limit per test: 2 seconds
 - memory limit per test: 512 megabytes

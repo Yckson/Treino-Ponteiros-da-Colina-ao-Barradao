@@ -1,0 +1,17 @@
+{
+  "code": "CF_2253A",
+  "contestId": 2253,
+  "index": "A",
+  "name": "The Best Card",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "greedy",
+  "tags": [
+    "greedy",
+    "math",
+    "number theory"
+  ],
+  "solvedCount": 16100,
+  "url": "https://codeforces.com/problemset/problem/2253/A",
+  "sampleCount": 1
+}

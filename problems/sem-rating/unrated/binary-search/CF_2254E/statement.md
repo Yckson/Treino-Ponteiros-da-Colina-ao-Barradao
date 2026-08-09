@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `binary-search`
 - Tags Codeforces: binary search, data structures, greedy
-- Resolvidos no Codeforces: 3603
+- Resolvidos no Codeforces: 5334
 - Titulo original: E. Chronostasis
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

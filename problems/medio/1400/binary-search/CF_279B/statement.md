@@ -4,7 +4,7 @@
 - Score/rating: 1400
 - Categoria local: `binary-search`
 - Tags Codeforces: binary search, brute force, implementation, two pointers
-- Resolvidos no Codeforces: 77444
+- Resolvidos no Codeforces: 77446
 - Titulo original: B. Books
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

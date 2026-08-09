@@ -4,7 +4,7 @@
 - Score/rating: 1300
 - Categoria local: `dp`
 - Tags Codeforces: dp, greedy
-- Resolvidos no Codeforces: 7816
+- Resolvidos no Codeforces: 8293
 - Titulo original: C. Maximize the Score
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

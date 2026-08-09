@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `greedy`
 - Tags Codeforces: greedy, sortings
-- Resolvidos no Codeforces: 8793
+- Resolvidos no Codeforces: 10974
 - Titulo original: C2. Marenol (hard version)
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

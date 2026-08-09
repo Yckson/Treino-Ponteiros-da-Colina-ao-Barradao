@@ -1,10 +1,10 @@
 # CF_2253E — Diameter Intersections
 
-- Codeforces: [2253E](https://codeforces.com/contest/2253/problem/E)
+- Codeforces: [2253E](https://codeforces.com/problemset/problem/2253/E)
 - Score/rating: unrated
 - Categoria local: `implementation`
-- Tags Codeforces: sem tags
-- Resolvidos no Codeforces: 0
+- Tags Codeforces: brute force, dfs and similar, fft, graphs, trees
+- Resolvidos no Codeforces: 822
 - Titulo original: E. Diameter Intersections
 - time limit per test: 4 seconds
 - memory limit per test: 512 megabytes

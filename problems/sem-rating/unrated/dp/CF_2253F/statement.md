@@ -1,10 +1,10 @@
 # CF_2253F — 4-beauty
 
-- Codeforces: [2253F](https://codeforces.com/contest/2253/problem/F)
+- Codeforces: [2253F](https://codeforces.com/problemset/problem/2253/F)
 - Score/rating: unrated
-- Categoria local: `implementation`
-- Tags Codeforces: sem tags
-- Resolvidos no Codeforces: 1
+- Categoria local: `dp`
+- Tags Codeforces: bitmasks, dp, graphs, math
+- Resolvidos no Codeforces: 199
 - Titulo original: F. 4-beauty
 - time limit per test: 5 seconds
 - memory limit per test: 1024 megabytes

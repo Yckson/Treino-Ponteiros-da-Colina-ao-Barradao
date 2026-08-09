@@ -4,7 +4,7 @@
 - Score/rating: 1900
 - Categoria local: `binary-search`
 - Tags Codeforces: binary search, brute force, greedy, math, two pointers
-- Resolvidos no Codeforces: 1527
+- Resolvidos no Codeforces: 1610
 - Titulo original: E. Excuse for Breaks
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

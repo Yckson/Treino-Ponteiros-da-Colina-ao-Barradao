@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `data-structures`
 - Tags Codeforces: data structures, dfs and similar, dp, greedy, sortings, trees
-- Resolvidos no Codeforces: 230
+- Resolvidos no Codeforces: 657
 - Titulo original: G. Nightcrawler
 - time limit per test: 2.5 seconds
 - memory limit per test: 256 megabytes

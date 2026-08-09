@@ -6,8 +6,14 @@
   "rating": null,
   "difficulty": "sem-rating",
   "category": "implementation",
-  "tags": [],
-  "solvedCount": 0,
-  "url": "https://codeforces.com/contest/2253/problem/E",
+  "tags": [
+    "brute force",
+    "dfs and similar",
+    "fft",
+    "graphs",
+    "trees"
+  ],
+  "solvedCount": 822,
+  "url": "https://codeforces.com/problemset/problem/2253/E",
   "sampleCount": 1
 }

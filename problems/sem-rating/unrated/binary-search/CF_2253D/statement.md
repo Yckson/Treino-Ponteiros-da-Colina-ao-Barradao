@@ -1,10 +1,10 @@
 # CF_2253D — Hypercarp and Interdimensional Jumps
 
-- Codeforces: [2253D](https://codeforces.com/contest/2253/problem/D)
+- Codeforces: [2253D](https://codeforces.com/problemset/problem/2253/D)
 - Score/rating: unrated
-- Categoria local: `implementation`
-- Tags Codeforces: sem tags
-- Resolvidos no Codeforces: 2
+- Categoria local: `binary-search`
+- Tags Codeforces: binary search, brute force, geometry, greedy, implementation, math
+- Resolvidos no Codeforces: 2313
 - Titulo original: D. Hypercarp and Interdimensional Jumps
 - time limit per test: 2 seconds
 - memory limit per test: 512 megabytes

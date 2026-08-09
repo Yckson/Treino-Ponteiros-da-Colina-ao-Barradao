@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `implementation`
 - Tags Codeforces: implementation, sortings
-- Resolvidos no Codeforces: 23922
+- Resolvidos no Codeforces: 27451
 - Titulo original: A. Riptide
 - time limit per test: 1 second
 - memory limit per test: 256 megabytes

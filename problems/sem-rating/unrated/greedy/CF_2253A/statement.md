@@ -1,10 +1,10 @@
 # CF_2253A — The Best Card
 
-- Codeforces: [2253A](https://codeforces.com/contest/2253/problem/A)
+- Codeforces: [2253A](https://codeforces.com/problemset/problem/2253/A)
 - Score/rating: unrated
-- Categoria local: `implementation`
-- Tags Codeforces: sem tags
-- Resolvidos no Codeforces: 7349
+- Categoria local: `greedy`
+- Tags Codeforces: greedy, math, number theory
+- Resolvidos no Codeforces: 16100
 - Titulo original: A. The Best Card
 - time limit per test: 2 seconds
 - memory limit per test: 512 megabytes

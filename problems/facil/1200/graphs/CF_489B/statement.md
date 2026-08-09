@@ -4,7 +4,7 @@
 - Score/rating: 1200
 - Categoria local: `graphs`
 - Tags Codeforces: dfs and similar, dp, graph matchings, greedy, sortings, two pointers
-- Resolvidos no Codeforces: 58829
+- Resolvidos no Codeforces: 58894
 - Titulo original: B. BerSU Ball
 - time limit per test: 1 second
 - memory limit per test: 256 megabytes

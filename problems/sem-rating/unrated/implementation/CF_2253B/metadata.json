@@ -6,8 +6,12 @@
   "rating": null,
   "difficulty": "sem-rating",
   "category": "implementation",
-  "tags": [],
-  "solvedCount": 106,
-  "url": "https://codeforces.com/contest/2253/problem/B",
+  "tags": [
+    "brute force",
+    "data structures",
+    "two pointers"
+  ],
+  "solvedCount": 9827,
+  "url": "https://codeforces.com/problemset/problem/2253/B",
   "sampleCount": 1
 }

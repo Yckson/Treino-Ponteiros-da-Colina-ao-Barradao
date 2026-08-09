@@ -5,9 +5,13 @@
   "name": "Sum of Distinct Values in a Matrix",
   "rating": null,
   "difficulty": "sem-rating",
-  "category": "implementation",
-  "tags": [],
-  "solvedCount": 4,
-  "url": "https://codeforces.com/contest/2253/problem/C",
+  "category": "greedy",
+  "tags": [
+    "greedy",
+    "sortings",
+    "two pointers"
+  ],
+  "solvedCount": 5623,
+  "url": "https://codeforces.com/problemset/problem/2253/C",
   "sampleCount": 1
 }

@@ -4,7 +4,7 @@
 - Score/rating: 1300
 - Categoria local: `implementation`
 - Tags Codeforces: brute force, dp
-- Resolvidos no Codeforces: 83761
+- Resolvidos no Codeforces: 83883
 - Titulo original: A. Cut Ribbon
 - time limit per test: 1 second
 - memory limit per test: 256 megabytes

@@ -9,9 +9,10 @@
   "tags": [
     "bitmasks",
     "constructive algorithms",
-    "math"
+    "math",
+    "sortings"
   ],
-  "solvedCount": 976,
+  "solvedCount": 2096,
   "url": "https://codeforces.com/problemset/problem/2254/F",
   "sampleCount": 1
 }

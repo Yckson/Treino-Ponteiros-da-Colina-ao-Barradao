@@ -4,7 +4,7 @@
 - Score/rating: 800
 - Categoria local: `greedy`
 - Tags Codeforces: greedy
-- Resolvidos no Codeforces: 16925
+- Resolvidos no Codeforces: 17691
 - Titulo original: A. You Delete, I Delete
 - time limit per test: 1 second
 - memory limit per test: 256 megabytes

@@ -1,10 +1,10 @@
 # CF_2253C — Sum of Distinct Values in a Matrix
 
-- Codeforces: [2253C](https://codeforces.com/contest/2253/problem/C)
+- Codeforces: [2253C](https://codeforces.com/problemset/problem/2253/C)
 - Score/rating: unrated
-- Categoria local: `implementation`
-- Tags Codeforces: sem tags
-- Resolvidos no Codeforces: 4
+- Categoria local: `greedy`
+- Tags Codeforces: greedy, sortings, two pointers
+- Resolvidos no Codeforces: 5623
 - Titulo original: C. Sum of Distinct Values in a Matrix
 - time limit per test: 2 seconds
 - memory limit per test: 512 megabytes

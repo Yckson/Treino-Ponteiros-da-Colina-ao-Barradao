@@ -4,7 +4,7 @@
 - Score/rating: 1000
 - Categoria local: `graphs`
 - Tags Codeforces: dfs and similar, graphs, implementation
-- Resolvidos no Codeforces: 64512
+- Resolvidos no Codeforces: 64555
 - Titulo original: A. New Year Transportation
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

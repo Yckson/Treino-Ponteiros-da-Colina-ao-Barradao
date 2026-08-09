@@ -3,8 +3,8 @@
 - Codeforces: [2248G](https://codeforces.com/problemset/problem/2248/G)
 - Score/rating: 3000
 - Categoria local: `dp`
-- Tags Codeforces: bitmasks, dp, math
-- Resolvidos no Codeforces: 102
+- Tags Codeforces: bitmasks, dp, math, number theory
+- Resolvidos no Codeforces: 111
 - Titulo original: G. No Balance Left
 - time limit per test: 6 seconds
 - memory limit per test: 256 megabytes

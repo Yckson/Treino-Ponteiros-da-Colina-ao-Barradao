@@ -4,7 +4,7 @@
 - Score/rating: 1400
 - Categoria local: `implementation`
 - Tags Codeforces: constructive algorithms, greedy, math
-- Resolvidos no Codeforces: 5583
+- Resolvidos no Codeforces: 5893
 - Titulo original: D. Good Pair Queries
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `implementation`
 - Tags Codeforces: constructive algorithms, math, sortings
-- Resolvidos no Codeforces: 5379
+- Resolvidos no Codeforces: 7659
 - Titulo original: D. Silhouette
 - time limit per test: 2.5 seconds
 - memory limit per test: 256 megabytes

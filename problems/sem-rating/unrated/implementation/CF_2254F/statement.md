@@ -3,8 +3,8 @@
 - Codeforces: [2254F](https://codeforces.com/problemset/problem/2254/F)
 - Score/rating: unrated
 - Categoria local: `implementation`
-- Tags Codeforces: bitmasks, constructive algorithms, math
-- Resolvidos no Codeforces: 976
+- Tags Codeforces: bitmasks, constructive algorithms, math, sortings
+- Resolvidos no Codeforces: 2096
 - Titulo original: F. Whiplash
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

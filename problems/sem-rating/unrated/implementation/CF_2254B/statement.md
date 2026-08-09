@@ -4,7 +4,7 @@
 - Score/rating: unrated
 - Categoria local: `implementation`
 - Tags Codeforces: implementation, strings, two pointers
-- Resolvidos no Codeforces: 17134
+- Resolvidos no Codeforces: 19857
 - Titulo original: B. Evanescent
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

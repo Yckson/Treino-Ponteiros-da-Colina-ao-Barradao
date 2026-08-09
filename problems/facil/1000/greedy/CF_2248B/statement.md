@@ -4,7 +4,7 @@
 - Score/rating: 1000
 - Categoria local: `greedy`
 - Tags Codeforces: greedy, sortings
-- Resolvidos no Codeforces: 12144
+- Resolvidos no Codeforces: 12644
 - Titulo original: B. Merge to Match
 - time limit per test: 1.5 seconds
 - memory limit per test: 256 megabytes

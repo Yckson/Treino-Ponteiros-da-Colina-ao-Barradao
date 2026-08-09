@@ -4,7 +4,7 @@
 - Score/rating: 2500
 - Categoria local: `binary-search`
 - Tags Codeforces: binary search, greedy, math
-- Resolvidos no Codeforces: 386
+- Resolvidos no Codeforces: 410
 - Titulo original: F. Matrix Elimination
 - time limit per test: 2 seconds
 - memory limit per test: 256 megabytes

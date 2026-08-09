@@ -1,0 +1,18 @@
+{
+  "code": "CF_2253F",
+  "contestId": 2253,
+  "index": "F",
+  "name": "4-beauty",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "dp",
+  "tags": [
+    "bitmasks",
+    "dp",
+    "graphs",
+    "math"
+  ],
+  "solvedCount": 199,
+  "url": "https://codeforces.com/problemset/problem/2253/F",
+  "sampleCount": 4
+}
