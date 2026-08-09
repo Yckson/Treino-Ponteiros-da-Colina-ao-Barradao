@@ -1,0 +1,18 @@
+{
+  "code": "CF_279B",
+  "contestId": 279,
+  "index": "B",
+  "name": "Books",
+  "rating": 1400,
+  "difficulty": "medio",
+  "category": "binary-search",
+  "tags": [
+    "binary search",
+    "brute force",
+    "implementation",
+    "two pointers"
+  ],
+  "solvedCount": 77444,
+  "url": "https://codeforces.com/problemset/problem/279/B",
+  "sampleCount": 2
+}
