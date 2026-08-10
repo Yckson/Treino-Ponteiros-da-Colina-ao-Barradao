@@ -3,49 +3,44 @@ using namespace std;
 
 using ll = long long;
 
+//Versão tentando implementar com Binary Search
 
 void solve (){
 
     int n, t; cin >> n >> t;
 
-    vector<int> a;
-    for (int i = 0; i < n; i++){
+    vector<int> a (n+1);
+    vector<int> prefix (n+1, 0);
+    for (int i = 1; i <= n; i++){
         int ai; cin >> ai;
-        a.push_back(ai);
+        a[i] = ai;
+        prefix[i] = prefix[i-1] + ai;
     }
     
-    queue<int> swin;
-
-    int ws = 0;
-    int qtd = 0;
     int ans = 0;
+    for (int i = 1; i<=n; i++){
 
-    for (int i = n-1; i >= 0; i--){
+        int l = i; int r = n;
 
-        while (ws + a[i] > t){
-            if (!swin.empty()){
-                ws -= (ws + a[i] - swin.front() > 0) ? swin.front() : 0;
-                qtd -= (qtd == 0) ? 0 : 1;
-                swin.pop();
+
+        while (l <= r){
+
+            int m = l + (r - l) / 2;
+
+            if (prefix[m] - prefix[i - 1] > t){
+                r = m-1;
             }
             else{
-                break;
+                ans = max(ans, m-i+1);
+                l = m+1;
+
+
             }
+
+
         }
-
-        if (ws + a[i] > t){
-            ws = 0;
-            continue;
-        }
-
-        ws += a[i];
-        swin.push(a[i]);
-        qtd = swin.size();
-        ans = max(ans, qtd);
-
+        
     }
-
-
 
     cout << ans << endl;
 
