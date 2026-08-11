@@ -1,0 +1,18 @@
+{
+  "code": "CF_276C",
+  "contestId": 276,
+  "index": "C",
+  "name": "Little Girl and Maximum Sum",
+  "rating": 1500,
+  "difficulty": "medio",
+  "category": "data-structures",
+  "tags": [
+    "data structures",
+    "greedy",
+    "implementation",
+    "sortings"
+  ],
+  "solvedCount": 42275,
+  "url": "https://codeforces.com/problemset/problem/276/C",
+  "sampleCount": 2
+}

@@ -1,0 +1,13 @@
+{
+  "code": "CF_103960A",
+  "contestId": 103960,
+  "index": "A",
+  "name": "Finding Maximal Non-Trivial Monotones",
+  "rating": null,
+  "difficulty": "sem-rating",
+  "category": "implementation",
+  "tags": [],
+  "solvedCount": 2430,
+  "url": "https://codeforces.com/gym/103960/problem/A",
+  "sampleCount": 4
+}
