@@ -1,0 +1,15 @@
+{
+  "code": "CF_318A",
+  "contestId": 318,
+  "index": "A",
+  "name": "Even Odds",
+  "rating": 900,
+  "difficulty": "iniciante",
+  "category": "math",
+  "tags": [
+    "math"
+  ],
+  "solvedCount": 147336,
+  "url": "https://codeforces.com/problemset/problem/318/A",
+  "sampleCount": 2
+}

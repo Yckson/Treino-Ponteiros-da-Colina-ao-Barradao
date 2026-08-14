@@ -1,0 +1,18 @@
+{
+  "code": "CF_750A",
+  "contestId": 750,
+  "index": "A",
+  "name": "New Year and Hurry",
+  "rating": 800,
+  "difficulty": "iniciante",
+  "category": "binary-search",
+  "tags": [
+    "binary search",
+    "brute force",
+    "implementation",
+    "math"
+  ],
+  "solvedCount": 95284,
+  "url": "https://codeforces.com/problemset/problem/750/A",
+  "sampleCount": 3
+}
