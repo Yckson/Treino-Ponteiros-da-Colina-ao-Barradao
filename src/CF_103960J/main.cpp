@@ -3,71 +3,60 @@ using namespace std;
 
 using ll = long long;
 
+/*
+
+    Resolvi refazer essa questão. A abordagem de testar todas as cartas que ainda estão no baralho é melhor
+    porque é mais fácil de implementar e as restrições permitem.
+
+*/
+
 
 void solve (){
 
-    int n; cin >> n;
+    int n; cin >>n;
 
-    vector<int> b (53, 4);
+    map<int, int> b;
 
-    int j, jj; cin >> j >> jj;
-    b[j]--;
-    j = min(j, 10);
-    b[jj]--;
-    j+=min(jj, 10);
+    for (int i = 1; i <= 13; i++){
+        b[i] += 4;
+    }
 
-    int m, mm; cin >> m >> mm;
-    b[m]--;
-    m = min(m, 10);
-    b[mm]--;
-    m+=min(mm, 10);
+    int cj, pj;
+    cin >> cj; pj = cj;b[cj]--;
 
+    cin >> cj; pj += cj; b[cj]--;
 
-    int pc = 0;
+    int cm, pm;
+    cin >> cm; pm = cm;b[cm]--;
+    cin >> cm; pm += cm;b[cm]--;
 
     for (int i = 0; i < n; i++){
         int c; cin >> c;
-        pc += min(c, 10);
         b[c]--;
+        pm += c;
+        pj += c;
     }
 
-    b[10] += b[11] + b[12] + b[13];
 
-    j += pc;
-    m += pc;
+    for (auto [c, q] : b){
+        int t = (c == 11 || c == 12 || c == 13) ? 10 : c;
 
-    //cout << j << ' ' << m << endl;
+        if (q){
 
-    int pm23 = 23 - m;
-    int pj23 = 23 - j;
+            if (pm + t == 23){
+                cout << t << endl;
+                return;
+            }
+            else if (pj + t > 23 && pm + t < 23){
+                cout << t << endl;
+                return;
+            }
 
-    int c = min(pm23, pj23);
-    //cout << "c: " << c << endl;
-
-    if (c == pm23 && c <= 10){
-        if(b[c]){
-            cout << c << endl;
-            return;
         }
-
-        
     }
 
-    c++;
-    while (m + c < 23 && c <= 10){
-        if (b[c]){
-            cout << c << endl;
-            return;
-        }
-        c++;
-    }
-
-    if (m + c == 23 && c <= 10 && b[c]){
-        cout << c << endl;
-        return;
-    }
-    
     cout << -1 << endl;
+    
 
 
 }
