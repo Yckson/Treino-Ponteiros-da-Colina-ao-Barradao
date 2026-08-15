@@ -1,0 +1,17 @@
+{
+  "code": "CF_270A",
+  "contestId": 270,
+  "index": "A",
+  "name": "Fancy Fence",
+  "rating": 1100,
+  "difficulty": "facil",
+  "category": "geometry",
+  "tags": [
+    "geometry",
+    "implementation",
+    "math"
+  ],
+  "solvedCount": 51753,
+  "url": "https://codeforces.com/problemset/problem/270/A",
+  "sampleCount": 1
+}

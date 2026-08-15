@@ -22,33 +22,36 @@ void solve (){
     }
 
     int cj, pj;
-    cin >> cj; pj = cj;b[cj]--;
-
-    cin >> cj; pj += cj; b[cj]--;
+    cin >> cj; pj = (cj > 10) ? 10 : cj;
+    b[cj]--;
+    cin >> cj; pj += (cj > 10) ? 10 : cj; 
+    b[cj]--;
 
     int cm, pm;
-    cin >> cm; pm = cm;b[cm]--;
-    cin >> cm; pm += cm;b[cm]--;
+    cin >> cm; pm = (cm > 10) ? 10 : cm;
+    b[cm]--;
+    cin >> cm; pm += (cm > 10) ? 10 : cm;
+    b[cm]--;
 
     for (int i = 0; i < n; i++){
         int c; cin >> c;
         b[c]--;
-        pm += c;
-        pj += c;
+        pm += (c > 10) ? 10 : c;
+        pj += (c > 10) ? 10 : c;
     }
 
 
     for (auto [c, q] : b){
-        int t = (c == 11 || c == 12 || c == 13) ? 10 : c;
+        int t = (c > 10) ? 10 : c;
 
         if (q){
 
             if (pm + t == 23){
-                cout << t << endl;
+                cout << c << endl;
                 return;
             }
             else if (pj + t > 23 && pm + t < 23){
-                cout << t << endl;
+                cout << c << endl;
                 return;
             }
 

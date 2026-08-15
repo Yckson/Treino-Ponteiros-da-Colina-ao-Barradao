@@ -8,71 +8,52 @@ using ll = long long;
 
 void solve (){
 
-    
 
-    int n; int c; cin >> n >> c;
+    int n, c; cin >> n >> c;
 
-    vector<vector<int>> chr (c, vector<int>(26, 0));
-    unordered_map<string, int> mp;
+    unordered_map<string, int> d;
+
 
     for (int i = 0; i < n; i++){
-
         string s; cin >> s;
-        mp[s]++;
+        auto k = s.find('*');
+        if (k == s.npos){
+            d[s]++;
+            continue;
+        }
 
-        for (int j = 0; j < c; j++){
+        for (char j = 0; j < 26; j++){
 
-            if (s[j] != '*'){
-
-                chr[j][s[j]-'a'] += 1;
-
-            }
-            else{
-                for (int k = 0; k < 26; k++){
-                    chr[j][k]++;
-                }
-            }
+            string t = s;
+            t[k] = 'a'+j;
+            d[t]++;
 
         }
 
     }
 
+    char t = 'z'+1;
     string ans;
-
     for (int i = 0; i < c; i++){
-        int ma = INT_MIN;
-        int mj = 0;
+        ans.push_back(t);
+    }
+    int cnt = 0;
 
-        for (int j = 0; j < 26; j++){
-            int m = chr[i][j];
-
-            if (ma < m){
-                ma = m;
-                mj = j;
-            }
-            else if (ma == m){
-                if (mj > j){
-                    mj = j;
-                }
-            }
-            
+    for (auto& [s, q] : d){
+        if (q > cnt){
+            ans = s;
+            cnt = q;
         }
-
-        ans.push_back('a'+ (char) mj);
-
+        else if (q == cnt){
+            if (s < ans){
+                ans = s;
+            }
+        }
     }
 
-    int t = 0;
+    cout << ans << ' ' << cnt << endl;
 
-    for (int i = 0; i < c; i++){
-        string st = ans;
-        st[i] = '*';
-
-        t+= mp[st];
-    }
-
-    cout << ans << ' ' << t << endl;
-
+   
 
 }
 

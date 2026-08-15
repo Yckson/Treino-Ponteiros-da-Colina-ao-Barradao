@@ -1,0 +1,15 @@
+{
+  "code": "CF_1A",
+  "contestId": 1,
+  "index": "A",
+  "name": "Theatre Square",
+  "rating": 1000,
+  "difficulty": "facil",
+  "category": "math",
+  "tags": [
+    "math"
+  ],
+  "solvedCount": 328921,
+  "url": "https://codeforces.com/problemset/problem/1/A",
+  "sampleCount": 1
+}
