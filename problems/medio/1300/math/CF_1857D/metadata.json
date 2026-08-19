@@ -1,0 +1,17 @@
+{
+  "code": "CF_1857D",
+  "contestId": 1857,
+  "index": "D",
+  "name": "Strong Vertices",
+  "rating": 1300,
+  "difficulty": "medio",
+  "category": "math",
+  "tags": [
+    "math",
+    "sortings",
+    "trees"
+  ],
+  "solvedCount": 31370,
+  "url": "https://codeforces.com/problemset/problem/1857/D",
+  "sampleCount": 1
+}
