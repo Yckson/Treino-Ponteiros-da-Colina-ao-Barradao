@@ -1,0 +1,16 @@
+{
+  "code": "CF_160A",
+  "contestId": 160,
+  "index": "A",
+  "name": "Twins",
+  "rating": 900,
+  "difficulty": "iniciante",
+  "category": "greedy",
+  "tags": [
+    "greedy",
+    "sortings"
+  ],
+  "solvedCount": 149649,
+  "url": "https://codeforces.com/problemset/problem/160/A",
+  "sampleCount": 2
+}

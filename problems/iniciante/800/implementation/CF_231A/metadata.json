@@ -1,0 +1,16 @@
+{
+  "code": "CF_231A",
+  "contestId": 231,
+  "index": "A",
+  "name": "Team",
+  "rating": 800,
+  "difficulty": "iniciante",
+  "category": "implementation",
+  "tags": [
+    "brute force",
+    "greedy"
+  ],
+  "solvedCount": 449011,
+  "url": "https://codeforces.com/problemset/problem/231/A",
+  "sampleCount": 2
+}
