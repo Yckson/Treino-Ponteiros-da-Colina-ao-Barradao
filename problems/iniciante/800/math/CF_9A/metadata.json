@@ -1,0 +1,16 @@
+{
+  "code": "CF_9A",
+  "contestId": 9,
+  "index": "A",
+  "name": "Die Roll",
+  "rating": 800,
+  "difficulty": "iniciante",
+  "category": "math",
+  "tags": [
+    "math",
+    "probabilities"
+  ],
+  "solvedCount": 72160,
+  "url": "https://codeforces.com/problemset/problem/9/A",
+  "sampleCount": 1
+}
