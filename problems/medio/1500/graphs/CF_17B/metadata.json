@@ -1,0 +1,18 @@
+{
+  "code": "CF_17B",
+  "contestId": 17,
+  "index": "B",
+  "name": "Hierarchy",
+  "rating": 1500,
+  "difficulty": "medio",
+  "category": "graphs",
+  "tags": [
+    "dfs and similar",
+    "dsu",
+    "greedy",
+    "shortest paths"
+  ],
+  "solvedCount": 6757,
+  "url": "https://codeforces.com/problemset/problem/17/B",
+  "sampleCount": 2
+}
